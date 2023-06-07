@@ -49,6 +49,10 @@ async function removeContact(contactId) {
     throw new Error('Not found');
   }
 
+  const deleted = contacts.find((contact) => {
+    return contact.id === contactId;
+  });
+
   return new Promise((resolve, reject) => {
     fs.writeFile(
       contactsPath,
@@ -61,7 +65,7 @@ async function removeContact(contactId) {
           return;
         }
 
-        resolve();
+        resolve(deleted);
       }
     );
   });
@@ -86,7 +90,7 @@ async function addContact(name, email, phone) {
         return;
       }
 
-      resolve();
+      resolve(newContact);
     });
   });
 }
